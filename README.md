@@ -28,7 +28,7 @@ Para incorporar en una aplicación Java, este segundo Factor (**2FA**), sea de e
 </dependency>
 ```
 ### Implementación
-**Paso 1.** Generar la **_Clave Secreta_** para *Google Authenticator*. <br/>Esta *clave secreta* es un hash de 20 byte (160 bits) que se debe cifrar en **Base32**. La clave resultante de 32 byte (256 bits), es la que debes registrar para un usuario específico; se debe generar una clave secreta para cada usuario. Para este cifrado utilizo la librería de *Google Guava*. En la clase TOTP del ejemplo se obtiene esta *clave secreta* con los métodos <br/> **`byte[]  generateKey()`** y **`String  getSecretKey (byte[] key)`**
+**Paso 1.** Generar la **_Clave Secreta_** para [Google Authenticator][googleauthtenticator]. <br/>Esta *clave secreta* es un hash de 20 byte (160 bits) que se debe cifrar en **Base32**. La clave resultante de 32 byte (256 bits), es la que debes registrar para un usuario específico; se debe generar una clave secreta para cada usuario. Para este cifrado utilizo la librería de *Google Guava*. En la clase TOTP del ejemplo se obtiene esta *clave secreta* con los métodos <br/> **`byte[]  generateKey()`** y **`String  getSecretKey (byte[] key)`**
 <br/><br/>
 El método `generateKey()` genera el hash de 20 bytes (160 bits) utilizando el algoritmo **HmacSHA256**. El método `getSecretKey (byte[] key)`, cifra el hash generado, utilizando *Base32*. El resultado es un texto cifrado de 32 bytes (256 bits) al que se le llama **Clave Secreta**.
 
@@ -62,8 +62,9 @@ private static  SecretKey    generateKey(String algoritmo, int keySize) throws N
     return(key);
 }
 ```
-**Paso 2.** Ingresar la **Clave Secreta** en **Google Authenticator**. <br/>Lo ideal es generar un Código de Barra bidimensional (**QR-Code**) con la *Clave Secreta* que luego pueda ser leida en *Google Authenticator* para mayor facilidad. Para efectos de este ejemplo, se queda así. En otra oportunidad expliclaré como generar el QR-Code.
+**Paso 2.** Ingresar la **Clave Secreta** en [Google Authenticator][googleauthtenticator]. <br/>Lo ideal es generar un Código de Barra bidimensional (**QR-Code**) con la *Clave Secreta* que luego pueda ser leida en *Google Authenticator* para mayor facilidad. Para efectos de este ejemplo, se queda así. En otra oportunidad expliclaré como generar el QR-Code.
 
-**Paso 3.** Validar las **Claves TOTP** que genera *Google Authenticator*. <br/>Para esto debes utilizar el método boolean isValidCode(String secretKey, long codeTOTP).  Donde secretKey es la Clave Secreta de 32 bytes que fue instalada en Google Authenticator, codeTOTP es la Clave TOTP a validar y que ha generado Google Authenticator. El resultado es Verdadero si la Clave TOTP es válida y vigente, de lo contrario devuelve Falso. En tu aplicación debes tomar las acciones necesarias para cada caso.
+**Paso 3.** Validar las **Claves TOTP** que genera [Google Authenticator][googleauthtenticator]. <br/>Para esto debes utilizar el método `boolean isValidCode(String secretKey, long codeTOTP)`;  donde **`secretKey`** es la *Clave Secreta* de 32 bytes que fue generado como se explica en el **Paso 1** e instalada en Google Authenticator, **`codeTOTP`** es la *Clave TOTP* a validar generada por *Google Authenticator*. El resultado es Verdadero si la *Clave TOTP* es válida y vigente, de lo contrario devuelve *Falso*. En tu aplicación debes tomar las acciones necesarias para cada caso.
 
 [rfc6328]: https://tools.ietf.org/html/rfc6238?fbclid=IwAR0gbgA80ZkOYv5FNtd4B_mQb7rsdrOwkIuDofW8Htw_3xPf1QXvf3iP3zk
+[googleauthtenticator]: https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai?hl=es
