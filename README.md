@@ -1,3 +1,5 @@
+[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
+
 # Autenticación de 2 Factores
 La Autenticación de 2 Factores (**2FA** por sus siglas en inglés), es un mecanismo para asegurar la identidad del usuario con el fin de proteger sus recursos. Los grandes de la Industria de TI como las Redes Sociales y Bancos utilizan este mecanismo, muy efectivo y sencillo de implementar en todo tipo de aplicaciones. Está basado en la Tecnología **TOTP**, *Time-based One Time Password*, por sus siglas en inglés, es un estandar definido en el [RFC 6328][rfc6328].
 <br/><br/>
