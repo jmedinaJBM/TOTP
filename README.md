@@ -74,12 +74,26 @@ public static boolean   isValidCode(String secretKey, long codeTOTP) {
     long currentInterval = getCurrentInterval(); 
 
     for (int i = -window; i <= window; ++i) { 
-        long hash = TOTP.generateTOTP(decodedKey, currentInterval + i, PASS_CODE_LENGTH, CRYPTO); 
+        long hash = TOTP.generateTOTP(decodedKey, currentInterval + i, PASS_CODE_LENGTH, CRYPTO);  //<--Genera el Código TOTP para compararlo con el que ha generado Google Authenticator utilizando la Clave Secreta (secretKey).
         if (hash == codeTOTP) { 
             return(true); 
         }
     }
     return(false);  // The code is invalid. 
+}
+```
+
+```java
+private static int      generateTOTP(byte[] key, long time, int digits, String crypto) { 
+    byte[] msg = ByteBuffer.allocate(8).putLong(time).array(); 
+    byte[] hash = hmacSha(crypto, key, msg); 
+
+    int offset = hash[hash.length - 1] & 0xf;   // put selected bytes into result int 
+
+    int binary = ((hash[offset] & 0x7f) << 24) | ((hash[offset + 1] & 0xff) << 16) | ((hash[offset + 2] & 0xff) << 8) | (hash[offset + 3] & 0xff); 
+    int otp = binary % DIGITS_POWER[digits];
+
+    return(otp); 
 }
 ```
 [rfc6328]: https://tools.ietf.org/html/rfc6238?fbclid=IwAR0gbgA80ZkOYv5FNtd4B_mQb7rsdrOwkIuDofW8Htw_3xPf1QXvf3iP3zk
