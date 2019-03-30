@@ -29,6 +29,7 @@ Para incorporar en una aplicación Java, este segundo Factor (**2FA**), sea de e
 ```
 ### Implementación
 **Paso 1.** Generar una **_clave secreta_** para *Google Authenticator*; esta *clave secreta* es un hash de 20 byte (160 bits) que se debe cifrar en **Base32**. La clave resultante de 32 byte (256 bits), es la que debes registrar para un usuario específico; se debe generar una clave secreta para cada usuario. Para este cifrado utilizo la librería de *Google Guava*. En la clase TOTP del ejemplo se obtiene esta *clave secreta* con los métodos **`byte[]  generateKey()`** y **`String  getSecretKey (byte[] key)`**
-`
+<br/><br/>
+El método `generateKey()` genera el hash de 20 bytes (160 bits) utilizando el algoritmo HmacSHA256. El método `getSecretKey (byte[] key)`, cifra el hash generado, utilizando *Base32*. El resultado es un texto cifrado de 32 bytes (256 bits) al que se le llama **Clave Secreta**.
 
 [rfc6328]: https://tools.ietf.org/html/rfc6238?fbclid=IwAR0gbgA80ZkOYv5FNtd4B_mQb7rsdrOwkIuDofW8Htw_3xPf1QXvf3iP3zk
