@@ -103,4 +103,4 @@ private static int      generateTOTP(byte[] key, long time, int digits, String c
 [googleauthtenticator]: https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai?hl=es
 
 [license img]:https://img.shields.io/badge/License-MIT-green.svg
-[license]:https://github.com/jmedinaJBM/TOTP/blob/master/License
+[license]:https://github.com/jmedinaJBM/TOTP/blob/master/LICENSE
