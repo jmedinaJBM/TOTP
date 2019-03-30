@@ -1,5 +1,5 @@
-<img src="Logo_v4.png" align="right" />
 # Autenticación de 2 Factores
+<img src="Logo_v4.png" align="right" />
 La Autenticación de 2 Factores (**2FA** por sus siglas en inglés), es un mecanismo para asegurar la identidad del usuario con el fin de proteger sus recursos. Los grandes de la Industria de TI como las Redes Sociales y Bancos utilizan este mecanismo, muy efectivo y sencillo de implementar en todo tipo de aplicaciones. Está basado en la Tecnología **TOTP**, *Time-based One Time Password*, por sus siglas en inglés, es un estandar definido en el [RFC 6328][rfc6328].
 <br/><br/>
 Cuando accedemos a nuestros recursos, lo hacemos tradicionalmente con un usuario y contraseña, que se supone solo nosotros conocemos. Pero qué pasa si alguien averigua nuestro usuario y contraseña? La solución es añadir un elemento más de seguridad. Algunos lo conocen como Token, pero técnicamente se le conoce como Clave de Una Vez Basada en el Tiempo, TOTP por sus siglas en inglés; este es un Código que solamente lo podrás utilizar una vez, que tiene un tiempo de caducidad porque que es generado en función del tiempo.
