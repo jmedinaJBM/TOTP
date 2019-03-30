@@ -1,7 +1,7 @@
 # Autenticación de 2 Factores Java
 La Autenticación de 2 Factores (**2FA** por sus siglas en inglés), es un mecanismo para asegurar la identidad del usuario con el fin de proteger sus recursos. Los grandes de la Industria de TI como las Redes Sociales y Bancos utilizan este mecanismo, muy efectivo y sencillo de implementar en todo tipo de aplicaciones. Está basado en la Tecnología **TOTP**, *Time-based One Time Password*, por sus siglas en inglés, es un estandar definido en el [RFC 6328][rfc6328].
 <br/><br/>
-Cuando accedemos a nuestros recursos, lo hacemos tradicionalmente con un usuario y contraseña, que se supone solo nosotros conocemos. Pero qué pasa si alguien averigua nuestro usuario y contraseña? La solución es añadir un elemento más de seguridad. Algunos lo conocen como Token, pero técnicamente se le conoce como Clave de Una Vez Basada en el Tiempo, TOTP por sus siglas en inglés. Significa que solamente la podrás utilizar una vez, que tiene un tiempo de caducidad y que es generada en función del tiempo.
+Cuando accedemos a nuestros recursos, lo hacemos tradicionalmente con un usuario y contraseña, que se supone solo nosotros conocemos. Pero qué pasa si alguien averigua nuestro usuario y contraseña? La solución es añadir un elemento más de seguridad. Algunos lo conocen como Token, pero técnicamente se le conoce como Clave de Una Vez Basada en el Tiempo, TOTP por sus siglas en inglés; este es un Código que solamente lo podrás utilizar una vez, que tiene un tiempo de caducidad porque que es generado en función del tiempo.
 
 ## TOTP
 Es el estandar que sirve para implementar 2FA. Consiste en utilizar el SmartPhone con una aplicación que genera las Claves que deberás proporcionar a la aplicación que quieres acceder, posterior a que hayas ingresado tu Usuario y Contraseña. Google Authenticator es una App de Google que genera Claves TOTP, es gratuita y está disponible para Android y iOS.<br/><br/>
@@ -10,7 +10,7 @@ Para incorporar en una aplicación Java, este segundo Factor (**2FA**), sea de e
 - [x] Implementar lo que dice el [RFC 6328][rfc6328]. En el ejmplo he creado una clase llamada TOTP con los métodos correspondientes. 
 - [x] Instalar [Google Authenticator][googleauthtenticator] en un SmartPhone (Android o iOS).
 - [x] Generar una Clave Secreta e instalarla en Google Authenticator. En el ejemplo hay métodos desarrollados.
-- [x] Verificar la Clave TOTP generada por Google Authenticator. En el ejemplo hay un método desarrollado.
+- [x] Verificar el código TOTP generado por Google Authenticator.
 
 ## Ejemplo con Java
 
@@ -28,7 +28,7 @@ Para incorporar en una aplicación Java, este segundo Factor (**2FA**), sea de e
 </dependency>
 ```
 ### Implementación
-**Paso 1.** Generar la **_Clave Secreta_** para [Google Authenticator][googleauthtenticator]. <br/>Esta *clave secreta* es un hash de 20 byte (160 bits) que se debe cifrar en **Base32**. La clave resultante de 32 byte (256 bits), es la que debes registrar para un usuario específico; se debe generar una clave secreta para cada usuario. Para este cifrado utilizo la librería de *Google Guava*. En la clase TOTP del ejemplo se obtiene esta *clave secreta* con los métodos <br/> **`byte[]  generateKey()`** y **`String  getSecretKey (byte[] key)`**
+**Paso 1.** Generar la **Clave Secreta** para [Google Authenticator][googleauthtenticator]. <br/>Esta *clave secreta* es un hash de 20 byte (160 bits) que se debe cifrar en **Base32**. La clave resultante de 32 byte (256 bits), es la que debes registrar para un usuario específico; se debe generar una clave secreta para cada usuario. Para este cifrado utilizo la librería de *Google Guava*. En la clase TOTP del ejemplo se obtiene esta *clave secreta* con los métodos <br/> **`byte[]  generateKey()`** y **`String  getSecretKey (byte[] key)`**
 <br/><br/>
 El método `generateKey()` genera el hash de 20 bytes (160 bits) utilizando el algoritmo **HmacSHA256**. El método `getSecretKey (byte[] key)`, cifra el hash generado, utilizando *Base32*. El resultado es un texto cifrado de 32 bytes (256 bits) al que se le llama **Clave Secreta**.
 
@@ -64,9 +64,9 @@ private static  SecretKey    generateKey(String algoritmo, int keySize) throws N
 ```
 **Paso 2.** Ingresar la **Clave Secreta** en [Google Authenticator][googleauthtenticator]. <br/>Lo ideal es generar un Código de Barra bidimensional (**QR-Code**) con la *Clave Secreta* que luego pueda ser leida en *Google Authenticator* para mayor facilidad. Para efectos de este ejemplo, se queda así. En otra oportunidad expliclaré como generar el QR-Code.
 
-**Paso 3.** Validar las **Claves TOTP** que genera [Google Authenticator][googleauthtenticator]. <br/>Para esto debes utilizar el método **`boolean isValidCode(String secretKey, long codeTOTP)`**;  donde **`secretKey`** es la *Clave Secreta* de 32 bytes que fue generada como se explica en el **Paso 1** e instalada en Google Authenticator, **`codeTOTP`** es la *Clave TOTP* a validar generada por *Google Authenticator*. El resultado es Verdadero si la *Clave TOTP* es válida y vigente, de lo contrario devuelve *Falso*. En tu aplicación debes tomar las acciones necesarias para cada caso.
+**Paso 3.** Validar las **Códigos TOTP** que genera [Google Authenticator][googleauthtenticator]. <br/>Para esto debes utilizar el método **`boolean isValidCode(String secretKey, long codeTOTP)`**;  donde **`secretKey`** es la *Clave Secreta* de 32 bytes que fue generada como se explica en el **Paso 1** e instalada en Google Authenticator, **`codeTOTP`** es el *Código TOTP* a validar generado por *Google Authenticator*. El resultado es Verdadero si la *Código TOTP* está vigente y se otiene de la *Clave Secreta*, de lo contrario devuelve *Falso*. En tu aplicación debes tomar las acciones necesarias para cada caso.
 ```java
-//---Valida si una Clave TOTP fue generada con la Clave Secreta dada en seecretKey y si está vigente---
+//---Valida si un Código TOTP fue generado con la Clave Secreta (seecretKey) y si está vigente---
 public static boolean   isValidCode(String secretKey, long codeTOTP) { 
     byte[] decodedKey = decodeSecretKey(secretKey);
 
