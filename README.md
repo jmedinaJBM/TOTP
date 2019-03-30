@@ -7,10 +7,10 @@ Cuando accedemos a nuestros recursos, lo hacemos tradicionalmente con un usuario
 Es el estandar que sirve para implementar 2FA. Consiste en utilizar el SmartPhone con una aplicación que genera las Claves que deberás proporcionar a la aplicación que quieres acceder, posterior a que hayas ingresado tu Usuario y Contraseña. Google Authenticator es una App de Google que genera Claves TOTP, es gratuita y está disponible para Android y iOS.<br/><br/>
 
 Para incorporar en una aplicación Java, este segundo Factor (**2FA**), sea de escritorio o web, es necesario hacer lo siguiente:
-1. Implementar lo que dice el [RFC 6328][rfc6328]. En el ejmplo he creado una clase llamada TOTP con los métodos correspondientes. 
-2. Instalar Google Authenticator en un SmartPhone (Android o iOS).
-3. Generar una Clave Secreta e instalarla en Google Authenticator. En el ejemplo hay métodos desarrollados.
-4. Verificar la Clave TOTP generada por Google Authenticator. En el ejemplo hay un método desarrollado.
+[x]. Implementar lo que dice el [RFC 6328][rfc6328]. En el ejmplo he creado una clase llamada TOTP con los métodos correspondientes. 
+[x]. Instalar Google Authenticator en un SmartPhone (Android o iOS).
+[x]. Generar una Clave Secreta e instalarla en Google Authenticator. En el ejemplo hay métodos desarrollados.
+[x]. Verificar la Clave TOTP generada por Google Authenticator. En el ejemplo hay un método desarrollado.
 
 ## Ejemplo con Java
 
@@ -64,7 +64,7 @@ private static  SecretKey    generateKey(String algoritmo, int keySize) throws N
 ```
 **Paso 2.** Ingresar la **Clave Secreta** en [Google Authenticator][googleauthtenticator]. <br/>Lo ideal es generar un Código de Barra bidimensional (**QR-Code**) con la *Clave Secreta* que luego pueda ser leida en *Google Authenticator* para mayor facilidad. Para efectos de este ejemplo, se queda así. En otra oportunidad expliclaré como generar el QR-Code.
 
-**Paso 3.** Validar las **Claves TOTP** que genera [Google Authenticator][googleauthtenticator]. <br/>Para esto debes utilizar el método `boolean isValidCode(String secretKey, long codeTOTP)`;  donde **`secretKey`** es la *Clave Secreta* de 32 bytes que fue generado como se explica en el **Paso 1** e instalada en Google Authenticator, **`codeTOTP`** es la *Clave TOTP* a validar generada por *Google Authenticator*. El resultado es Verdadero si la *Clave TOTP* es válida y vigente, de lo contrario devuelve *Falso*. En tu aplicación debes tomar las acciones necesarias para cada caso.
+**Paso 3.** Validar las **Claves TOTP** que genera [Google Authenticator][googleauthtenticator]. <br/>Para esto debes utilizar el método **`boolean isValidCode(String secretKey, long codeTOTP)`**;  donde **`secretKey`** es la *Clave Secreta* de 32 bytes que fue generado como se explica en el **Paso 1** e instalada en Google Authenticator, **`codeTOTP`** es la *Clave TOTP* a validar generada por *Google Authenticator*. El resultado es Verdadero si la *Clave TOTP* es válida y vigente, de lo contrario devuelve *Falso*. En tu aplicación debes tomar las acciones necesarias para cada caso.
 
 [rfc6328]: https://tools.ietf.org/html/rfc6238?fbclid=IwAR0gbgA80ZkOYv5FNtd4B_mQb7rsdrOwkIuDofW8Htw_3xPf1QXvf3iP3zk
 [googleauthtenticator]: https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai?hl=es
