@@ -1,4 +1,4 @@
-[![][license img]]
+[![][license img]][license]
 <img src="Logo_v4.png" align="right" />
 
 # Autenticación de 2 Factores
@@ -103,3 +103,4 @@ private static int      generateTOTP(byte[] key, long time, int digits, String c
 [googleauthtenticator]: https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai?hl=es
 
 [license img]:https://img.shields.io/badge/License-MIT-green.svg
+[license]:https://github.com/jmedinaJBM/TOTP/blob/master/LicenseMIT.txt
