@@ -7,10 +7,10 @@ Cuando accedemos a nuestros recursos, lo hacemos tradicionalmente con un usuario
 Es el estandar que sirve para implementar 2FA. Consiste en utilizar el SmartPhone con una aplicación que genera las Claves que deberás proporcionar a la aplicación que quieres acceder, posterior a que hayas ingresado tu Usuario y Contraseña. Google Authenticator es una App de Google que genera Claves TOTP, es gratuita y está disponible para Android y iOS.<br/><br/>
 
 Para incorporar en una aplicación Java, este segundo Factor (**2FA**), sea de escritorio o web, es necesario hacer lo siguiente:
-[x] Implementar lo que dice el [RFC 6328][rfc6328]. En el ejmplo he creado una clase llamada TOTP con los métodos correspondientes. 
-[x] Instalar Google Authenticator en un SmartPhone (Android o iOS).
-[x] Generar una Clave Secreta e instalarla en Google Authenticator. En el ejemplo hay métodos desarrollados.
-[x] Verificar la Clave TOTP generada por Google Authenticator. En el ejemplo hay un método desarrollado.
+- [x] Implementar lo que dice el [RFC 6328][rfc6328]. En el ejmplo he creado una clase llamada TOTP con los métodos correspondientes. 
+- [x] Instalar Google Authenticator en un SmartPhone (Android o iOS).
+- [x] Generar una Clave Secreta e instalarla en Google Authenticator. En el ejemplo hay métodos desarrollados.
+- [x] Verificar la Clave TOTP generada por Google Authenticator. En el ejemplo hay un método desarrollado.
 
 ## Ejemplo con Java
 
